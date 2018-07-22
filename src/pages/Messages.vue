@@ -181,12 +181,19 @@
       },
 
       showPopover(index, e) {
-        let bubbleData = Object.assign({}, this.messagesData[index]);
-        let at = bubbleData.meta.at;
+        let bubbleData = {...this.messagesData[index]};
+        let at = [...bubbleData.meta.at];
 
         if (at.length > 0) {
-          let fromData = this.messagesData.slice(0, index).filter((item) => {
-            return at.includes(item.name);
+          let fromData = this.messagesData.slice(0, index).reverse().filter((item) => {
+            let index = at.indexOf(item.name);
+
+            if (index !== -1) {
+              at.splice(index, 1);
+              return true;
+            }
+
+            return false;
           });
 
           if (fromData.length > 0) {
