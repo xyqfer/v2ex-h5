@@ -159,7 +159,7 @@
       },
 
       getData() {
-        return this.$http.get(api.hot)
+        return this.$http.get(api.new)
           .then((result) => {
             if (result.success) {
               this.listData = result.data;
