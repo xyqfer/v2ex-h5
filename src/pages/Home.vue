@@ -5,10 +5,10 @@
     @ptr:refresh="onRefresh"
     ref="homePage">
     <f7-navbar>
-      <f7-nav-title>V2EX</f7-nav-title>
+      <f7-nav-title>V2EX × 🌀</f7-nav-title>
       <f7-nav-right>
         <f7-link
-          icon-ios="f7:add"
+          icon-ios="f7:compose"
           icon-md="material:create">
         </f7-link>
       </f7-nav-right>
