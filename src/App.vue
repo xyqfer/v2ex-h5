@@ -62,6 +62,10 @@
 
   .ios,
   .md {
+    .block-title {
+      text-transform: initial;
+    }
+
     .topic-list {
       margin: 0;
 
