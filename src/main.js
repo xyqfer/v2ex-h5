@@ -1,11 +1,16 @@
-import Vue from "vue";
+import Vue from 'vue';
 import Framework7 from 'framework7/framework7.esm.bundle';
 import Framework7Vue from 'framework7-vue';
-import App from "./App.vue";
-import "./registerServiceWorker";
+import App from './App.vue';
+import localforage from 'localforage';
+import './registerServiceWorker';
 // import store from "./store";
 
 Framework7.use(Framework7Vue);
+
+localforage.config({
+  'name': 'm.v2ex',
+});
 
 Vue.config.productionTip = false;
 
@@ -50,6 +55,8 @@ Vue.prototype.$http = {
     });
   },
 };
+
+Vue.prototype.$lf = localforage;
 
 new Vue({
   // store,

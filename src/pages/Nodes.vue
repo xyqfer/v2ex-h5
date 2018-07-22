@@ -98,16 +98,20 @@
     data() {
       return {
         nodesData: [],
-        lsKey: 'nodes_data',
+        lfKey: 'nodesData',
       };
     },
 
     created() {
-      let storageData = localStorage.getItem(this.lsKey);
-
-      if (storageData) {
-        this.nodesData = JSON.parse(storageData);
-      }
+      this.$lf.getItem(this.lfKey)
+        .then((data) => {
+          if (data) {
+            this.nodesData = data;
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     },
 
     methods: {
@@ -133,8 +137,10 @@
           .then((result) => {
             if (result.success) {
               this.nodesData = result.data;
-
-              localStorage.setItem(this.lsKey, JSON.stringify(result.data));
+              this.$lf.setItem(this.lfKey, result.data)
+                .catch((err) => {
+                  console.log(err);
+                });
             }
           }).catch((err) => {
             console.log(err);

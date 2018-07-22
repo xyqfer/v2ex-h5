@@ -130,7 +130,11 @@
       f7ListItem,
     },
     created() {
-      this.id = this.$f7route.params.id;
+      let { id } = this.$f7route.params;
+      let lfKey = `/t/${id}/topic`;
+
+      this.id = id;
+      this.lfKey = lfKey;
     },
     mounted() {
       this.$f7ready(() => {
@@ -141,6 +145,7 @@
       return {
         messagesData: [],
         id: 0,
+        lfKey: '',
         p: 1,
         total: 1,
         isInit: false,
@@ -171,12 +176,7 @@
 
       onNavRightClick() {
         if (this.node.url) {
-          const chatInfo = JSON.stringify({
-            node: this.node,
-            id: this.id,
-          });
-
-          this.$f7router.navigate(`/chatDetail/${encodeURIComponent(chatInfo)}`);
+          this.$f7router.navigate(`/chatDetail/${this.id}`);
         }
       },
 
@@ -221,6 +221,10 @@
               let topicData = result.data.topic;
 
               this.count = topicData.count;
+              this.$lf.setItem(this.lfKey, topicData)
+                .catch((err) => {
+                  console.log(err);
+                });
 
               if (this.p === 1) {
                 messagesData.push({

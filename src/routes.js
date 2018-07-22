@@ -40,7 +40,7 @@ export default [
     component: Messages,
   },
   {
-    path: '/chatDetail/:chatInfo',
+    path: '/chatDetail/:id',
     component: ChatDetail,
   },
   {
