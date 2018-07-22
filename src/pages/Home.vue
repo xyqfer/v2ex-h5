@@ -60,9 +60,10 @@
         ios="f7:close"
         md="material:close"></f7-icon>
       <f7-fab-buttons position="top">
-        <f7-fab-button @click="">好玩</f7-fab-button>
-        <f7-fab-button @click="">创意</f7-fab-button>
-        <f7-fab-button @click="">技术</f7-fab-button>
+        <f7-fab-button @click="onFabClick('hot')">最热</f7-fab-button>
+        <f7-fab-button @click="onFabClick('play')">好玩</f7-fab-button>
+        <f7-fab-button @click="onFabClick('creative')">创意</f7-fab-button>
+        <f7-fab-button @click="onFabClick('tech')">技术</f7-fab-button>
       </f7-fab-buttons>
     </f7-fab>
 
@@ -156,6 +157,17 @@
           .then(() => {
             done();
           });
+      },
+
+      onFabClick(tabType) {
+        const tabObj = {
+          tech: '技术',
+          creative: '创意',
+          play: '好玩',
+          hot: '最热',
+        };
+
+        this.$f7router.navigate(`/tab/${tabType}?title=${tabObj[tabType]}`);
       },
 
       getData() {

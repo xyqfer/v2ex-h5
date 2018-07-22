@@ -4,6 +4,7 @@ import Me from './pages/Me.vue';
 import Messages from './pages/Messages.vue';
 import Nodes from './pages/Nodes.vue';
 import Node from './pages/Go.vue';
+import Tab from './pages/Tab.vue';
 import AllNode from './pages/AllNodes.vue';
 import Member from './pages/Member.vue';
 import MemberTopic from './pages/MemberTopic.vue';
@@ -50,6 +51,10 @@ export default [
   {
     path: '/go/:name',
     component: Node,
+  },
+  {
+    path: '/tab/:name',
+    component: Tab,
   },
   {
     path: '/member/:name',
