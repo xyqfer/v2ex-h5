@@ -1,19 +1,18 @@
 <template>
-  <f7-page
-    @page:init="onPageInit">
+  <f7-page>
     <f7-navbar title="聊天信息" back-link="返回"></f7-navbar>
 
-    <f7-list v-if="chatInfo.node">
+    <f7-list v-if="chatInfo.node.url">
       <f7-list-item
         :link="`${chatInfo.node.url}?title=${chatInfo.node.name}`"
         title="所在节点"
         :after="chatInfo.node.name">
       </f7-list-item>
       <f7-list-item
-        :link="`https://www.v2ex.com/t/${chatInfo.id}`"
+        :link="`https://www.v2ex.com/t/${id}`"
         title="查看原帖"
         target="_blank"
-        :after="`/t/${chatInfo.id}`"
+        :after="`/t/${id}`"
         :external="true">
       </f7-list-item>
     </f7-list>
@@ -41,17 +40,27 @@
       f7ListItem,
     },
 
-    data() {
-      return {
-        chatInfo: {},
-      };
+    created() {
+      let { id } = this.$f7route.params;
+      this.id = id;
+
+      this.$lf.getItem(`/t/${id}/topic`)
+        .then((data) => {
+          this.chatInfo.node = data.node;
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     },
 
-    methods: {
-      onPageInit() {
-        this.chatInfo = JSON.parse(decodeURIComponent(this.$f7route.params.chatInfo));
-      },
-    }
+    data() {
+      return {
+        id: 0,
+        chatInfo: {
+          node: {},
+        },
+      };
+    },
   };
 </script>
 
