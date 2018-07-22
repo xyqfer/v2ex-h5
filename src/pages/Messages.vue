@@ -1,15 +1,18 @@
 <template>
   <f7-page
-      @page:init="onPageInit"
-      @infinite="onInfinite"
-      :infinite-preloader="showPreloader"
-      :infinite="true">
-    <f7-navbar title="群聊" back-link="返回">
+    @page:init="onPageInit"
+    @infinite="onInfinite"
+    :infinite-preloader="showPreloader"
+    :infinite="true">
+    <f7-navbar
+      title="群聊"
+      back-link="返回"
+      :subtitle="count">
       <f7-nav-right>
         <f7-link
-            @click="onNavRightClick"
-            icon-ios="f7:more"
-            icon-md="material:menu">
+          @click="onNavRightClick"
+          icon-ios="f7:more_fill"
+          icon-md="material:menu">
         </f7-link>
       </f7-nav-right>
     </f7-navbar>
@@ -20,24 +23,29 @@
 
     <f7-messages ref="messages" :scroll-messages="false" class="v2ex-message-list">
       <f7-message
-          v-for="(message, index) in messagesData"
-          :key="index"
-          :type="message.type"
-          :image="message.image"
-          :name="message.name"
-          :avatar="message.avatar"
-          :first="isFirstMessage(message, index)"
-          :last="isLastMessage(message, index)"
-          :tail="isTailMessage(message, index)"
-          @click:avatar="onClickMember(message.name)"
-          @click:bubble="message.meta.floor ? onClickBubble(index, $event) : ''"
-          @click="onMessageClick">
-        <div slot="text" v-if="message.text" v-html="message.text"></div>
-        <div slot="text-header" v-if="message.meta.floor">
-          {{message.meta.floor}}楼
+        v-for="(message, index) in messagesData"
+        :key="index"
+        :type="message.type"
+        :image="message.image"
+        :name="message.name"
+        :avatar="message.avatar"
+        :first="isFirstMessage(message, index)"
+        :last="isLastMessage(message, index)"
+        :tail="isTailMessage(message, index)"
+        @click:avatar="onClickMember(message.name)"
+        @click="message.meta.floor ? onMessageClick(index, $event) : ''">
+        <div
+          slot="text"
+          v-if="message.text"
+          v-html="message.text">
         </div>
-        <div slot="text-header" v-if="message.meta.addition">
-          {{message.meta.addition.title}}
+        <div slot="text-header">
+          <template v-if="message.meta.floor">
+            {{message.meta.floor}}楼
+          </template>
+          <template v-if="message.meta.addition">
+            {{message.meta.addition.title}}
+          </template>
         </div>
         <div slot="text-footer">
           <template v-if="message.meta.time">
@@ -50,30 +58,33 @@
             {{message.meta.addition.time}}
           </template>
           <template v-if="message.meta.thank">
-            •&nbsp;<span>{{message.meta.thank}}</span>
+            •&nbsp;{{message.meta.thank}}
+          </template>
+          <template v-if="message.meta.click">
+            •&nbsp;{{message.meta.click}}
           </template>
         </div>
       </f7-message>
     </f7-messages>
 
     <f7-photo-browser
-        :photos="photos"
-        theme="dark"
-        type="popup"
-        ref="photoBrowser"
-        back-link-text="关闭"
-        navbar-of-text="/"
-        :toolbar="false"
-        :key="photoBrowserKey">
+      :photos="photos"
+      theme="dark"
+      type="popup"
+      ref="photoBrowser"
+      back-link-text="关闭"
+      navbar-of-text="/"
+      :toolbar="false"
+      :key="photoBrowserKey">
     </f7-photo-browser>
 
     <f7-popover ref="popover">
       <f7-list>
         <f7-list-item
-            link=""
-            @click="onShowChatClick"
-            popover-close
-            title="查看对话">
+          link=""
+          @click="onShowChatClick"
+          popover-close
+          title="查看对话">
         </f7-list-item>
       </f7-list>
     </f7-popover>
@@ -139,6 +150,7 @@
         photoBrowserKey: 0,
         allowInfinite: true,
         showPreloader: true,
+        count: '',
       };
     },
     methods: {
@@ -168,7 +180,7 @@
         }
       },
 
-      onClickBubble(index, e) {
+      showPopover(index, e) {
         let bubbleData = Object.assign({}, this.messagesData[index]);
         let at = bubbleData.meta.at;
 
@@ -199,10 +211,11 @@
           .then((result) => {
             if (result.success) {
               let messagesData = [];
+              let topicData = result.data.topic;
+
+              this.count = topicData.count;
 
               if (this.p === 1) {
-                let topicData = result.data.topic;
-
                 messagesData.push({
                   type: 'received',
                   name: topicData.author,
@@ -210,6 +223,7 @@
                   avatar: topicData.avatar,
                   meta: {
                     time: topicData.time,
+                    click: topicData.click,
                   }
                 });
 
@@ -272,8 +286,10 @@
           });
       },
 
-      onMessageClick(e) {
-        if (e.target.nodeName.toLowerCase() === 'img') {
+      onMessageClick(index, e) {
+        let nodeName = e.target.nodeName.toLowerCase();
+
+        if (nodeName === 'img') {
           let url = e.target.getAttribute('src');
 
           if (url) {
@@ -284,6 +300,8 @@
               this.$refs.photoBrowser.open(0);
             });
           }
+        } else if (nodeName !== 'a') {
+          this.showPopover(index, e);
         }
       },
 
