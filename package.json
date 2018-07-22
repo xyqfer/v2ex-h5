@@ -14,7 +14,6 @@
     "register-service-worker": "^1.0.0",
     "timeago": "^1.6.3",
     "vue": "^2.5.16",
-    "vue-router": "^3.0.1",
     "vuex": "^3.0.1"
   },
   "devDependencies": {
@@ -22,7 +21,7 @@
     "@vue/cli-plugin-eslint": "^3.0.0-rc.5",
     "@vue/cli-plugin-pwa": "^3.0.0-rc.5",
     "@vue/cli-plugin-unit-jest": "^3.0.0-rc.5",
-    "@vue/cli-service": "^3.0.0-rc.5",
+    "@vue/cli-service": "^3.0.0-rc.3",
     "@vue/eslint-config-prettier": "^3.0.0-rc.5",
     "@vue/test-utils": "^1.0.0-beta.20",
     "babel-core": "7.0.0-bridge.0",
@@ -31,5 +30,12 @@
     "postcss-px-to-viewport": "0.0.3",
     "sass-loader": "^7.0.1",
     "vue-template-compiler": "^2.5.16"
-  }
+  },
+  "browserslist": [
+    "Android >= 4",
+    "Chrome >= 40",
+    "last 6 Firefox versions",
+    "iOS >= 6",
+    "Safari >= 6"
+  ]
 }
