@@ -60,10 +60,11 @@
         ios="f7:close"
         md="material:close"></f7-icon>
       <f7-fab-buttons position="top">
-        <f7-fab-button @click="onFabClick('hot')">最热</f7-fab-button>
-        <f7-fab-button @click="onFabClick('play')">好玩</f7-fab-button>
-        <f7-fab-button @click="onFabClick('creative')">创意</f7-fab-button>
-        <f7-fab-button @click="onFabClick('tech')">技术</f7-fab-button>
+        <f7-fab-button
+          v-for="(value, key) in tabConfig"
+          @click="onFabClick(key)">
+          {{value}}
+        </f7-fab-button>
       </f7-fab-buttons>
     </f7-fab>
 
@@ -130,6 +131,14 @@
       return {
         listData: [],
         lfKey: 'homeData',
+        tabConfig: {
+          all: '全部',
+          hot: '最热',
+          city: '城市',
+          play: '好玩',
+          creative: '创意',
+          tech: '技术',
+        },
       };
     },
 
@@ -160,14 +169,7 @@
       },
 
       onFabClick(tabType) {
-        const tabObj = {
-          tech: '技术',
-          creative: '创意',
-          play: '好玩',
-          hot: '最热',
-        };
-
-        this.$f7router.navigate(`/tab/${tabType}?title=${tabObj[tabType]}`);
+        this.$f7router.navigate(`/tab/${tabType}?title=${this.tabConfig[tabType]}`);
       },
 
       getData() {
