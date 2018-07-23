@@ -33,7 +33,7 @@
         :last="isLastMessage(message, index)"
         :tail="isTailMessage(message, index)"
         @click:avatar="onClickMember(message.name)"
-        @click="message.meta.floor ? onMessageClick(index, $event) : ''">
+        @click="onMessageClick(index, message.meta.floor, $event)">
         <div
           slot="text"
           v-if="message.text"
@@ -304,7 +304,7 @@
           });
       },
 
-      onMessageClick(index, e) {
+      onMessageClick(index, floor, e) {
         let nodeName = e.target.nodeName.toLowerCase();
 
         if (nodeName === 'img') {
@@ -319,7 +319,9 @@
             });
           }
         } else if (nodeName !== 'a') {
-          this.showPopover(index, e);
+          if (floor) {
+            this.showPopover(index, e);
+          }
         }
       },
 
