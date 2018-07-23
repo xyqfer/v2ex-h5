@@ -13,8 +13,9 @@
           {{item.title}}
         </div>
         <div slot="text">
+          {{item.node}}
           <template v-if="item.time">
-            {{item.time}}
+            • {{item.time}}
           </template>
         </div>
         <span slot="after">
