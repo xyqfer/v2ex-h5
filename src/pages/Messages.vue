@@ -42,6 +42,9 @@
         <div slot="text-header">
           <template v-if="message.meta.floor">
             {{message.meta.floor}}楼
+            <template v-if="author === message.name">
+              •&nbsp;楼主
+            </template>
           </template>
           <template v-if="message.meta.addition">
             {{message.meta.addition.title}}
@@ -156,6 +159,7 @@
         allowInfinite: true,
         showPreloader: true,
         count: '',
+        author: '',
       };
     },
     methods: {
@@ -234,6 +238,8 @@
                 });
 
               if (this.p === 1) {
+                this.author = topicData.author;
+
                 messagesData.push({
                   type: 'received',
                   name: topicData.author,
