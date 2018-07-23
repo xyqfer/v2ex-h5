@@ -183,20 +183,27 @@
       showPopover(index, e) {
         let bubbleData = {...this.messagesData[index]};
         let at = [...bubbleData.meta.at];
+        let atLength = at.length;
 
-        if (at.length > 0) {
-          let fromData = this.messagesData.slice(0, index).reverse().filter((item) => {
-            let index = at.indexOf(item.name);
+        if (atLength > 0) {
+          let count = 0;
+          let fromData = [];
+          let subMessages = this.messagesData.slice(0, index);
 
-            if (index !== -1) {
-              at.splice(index, 1);
-              return true;
+          for (let i = index - 1; i >=0; i--) {
+            let item = subMessages[i];
+            let atIndex = at.indexOf(item.name);
+
+            if (atIndex !== -1 && !fromData[atIndex]) {
+              fromData[atIndex] = item;
+
+              if (++count >= atLength) {
+                break;
+              }
             }
+          }
 
-            return false;
-          });
-
-          if (fromData.length > 0) {
+          if (count === atLength) {
             bubbleData.type = 'sent';
             this.dialogData = fromData.concat(bubbleData);
 
