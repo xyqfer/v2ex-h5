@@ -3,7 +3,8 @@
     @page:init="onPageInit"
     @infinite="onInfinite"
     :infinite-preloader="showPreloader"
-    :infinite="true">
+    :infinite="true"
+    class="messages-page">
     <f7-navbar
       title="群聊"
       back-link="返回"
@@ -363,24 +364,44 @@
 </script>
 
 <style lang="scss">
-  .v2ex-message-list {
-    /*background-image: url(https://images.unsplash.com/photo-1530038948867-2efb2d4f3597?ixlib=rb-0.3.5&s=d44aaba93b7520000c295eb12c1156b5&auto=format&fit=crop&w=668&q=80);*/
-    background-repeat: no-repeat;
-    background-size: cover;
-    background-position: center;
+  .ios,
+  .md {
+    .view {
+      .messages-page {
+        background: initial;
+        background-image: url(~@/assets/img/background_1.png);
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-position: center;
 
-    .embedded_image {
-      max-width: 100%;
-    }
+        .messages-content {
+          background: initial;
 
-    .markdown_body {
-      img {
-        width: 100%;
+          .v2ex-message-list {
+            background: initial;
+
+            .message-received {
+              .message-bubble {
+                background-color: #fff;
+              }
+            }
+
+            .embedded_image {
+              max-width: 100%;
+            }
+
+            .markdown_body {
+              img {
+                width: 100%;
+              }
+            }
+
+            iframe {
+              width: 100%;
+            }
+          }
+        }
       }
-    }
-
-    iframe {
-      width: 100%;
     }
   }
 </style>

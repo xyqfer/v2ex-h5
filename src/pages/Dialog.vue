@@ -1,21 +1,22 @@
 <template>
   <f7-page
-      @page:init="onPageInit">
+    @page:init="onPageInit"
+    class="messages-page">
     <f7-navbar title="对话详情" back-link="返回"></f7-navbar>
 
     <f7-messages ref="dialog" :scroll-messages="false" class="v2ex-message-list">
       <f7-message
-          v-for="(message, index) in messagesData"
-          :key="index"
-          :type="message.type"
-          :image="message.image"
-          :name="message.name"
-          :avatar="message.avatar"
-          :first="isFirstMessage(message, index)"
-          :last="isLastMessage(message, index)"
-          :tail="isTailMessage(message, index)"
-          @click:avatar="onClickMember(message.name)"
-          @click="onMessageClick">
+        v-for="(message, index) in messagesData"
+        :key="index"
+        :type="message.type"
+        :image="message.image"
+        :name="message.name"
+        :avatar="message.avatar"
+        :first="isFirstMessage(message, index)"
+        :last="isLastMessage(message, index)"
+        :tail="isTailMessage(message, index)"
+        @click:avatar="onClickMember(message.name)"
+        @click="onMessageClick">
         <div slot="text" v-if="message.text" v-html="message.text"></div>
         <div slot="text-header" v-if="message.meta.floor">
           {{message.meta.floor}}楼
