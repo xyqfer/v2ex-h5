@@ -7,4 +7,8 @@ module.exports = {
     }
   },
   baseUrl: process.env.VUE_APP_BASE_URL,
+  pwa: {
+    name: 'V2EX',
+    themeColor: '#f7f7f8',
+  },
 };
