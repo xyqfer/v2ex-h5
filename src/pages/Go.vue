@@ -4,9 +4,15 @@
     @infinite="onInfinite"
     :infinite-preloader="showPreloader"
     :infinite="true">
-    <f7-navbar back-link="返回" :title="title"></f7-navbar>
+    <f7-navbar
+      back-link="返回"
+      :title="title"
+      :subtitle="topicCount">
+    </f7-navbar>
 
-    <f7-list media-list class="topic-list">
+    <f7-list
+      media-list
+      class="topic-list">
       <f7-list-item
         v-for="item in listData"
         :link="'/t/' + item.id"
@@ -45,7 +51,12 @@
   export default {
     created() {
       this.name = this.$f7route.params.name;
-      this.title = this.$f7route.query.title;
+
+      let { title } = this.$f7route.query;
+      if (!title) {
+        title = '加载中...';
+      }
+      this.title = title;
     },
 
     components: {
@@ -66,6 +77,7 @@
         title: '',
         p: 1,
         total: 1,
+        topicCount: '',
         allowInfinite: true,
         showPreloader: true,
       };
@@ -99,6 +111,8 @@
               this.listData = this.listData.concat(result.data.list);
               this.p = this.p + 1;
               this.total = result.data.total;
+              this.title = result.data.node.name;
+              this.topicCount = `${result.data.node.count} 主题`;
             }
           }).catch((err) => {
             console.log(err);
