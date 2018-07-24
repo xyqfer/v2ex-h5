@@ -1,6 +1,15 @@
 <template>
   <f7-page @page:init="onPageInit">
-    <f7-navbar back-link="返回" :title="title"></f7-navbar>
+    <f7-navbar
+      back-link="返回"
+      :title="title">
+    </f7-navbar>
+
+    <f7-block
+      class="text-align-center"
+      v-if="!isInit">
+      <f7-preloader></f7-preloader>
+    </f7-block>
 
     <f7-list media-list class="topic-list">
       <f7-list-item
@@ -36,15 +45,11 @@
     f7Icon,
     f7Chip,
     f7Block,
+    f7Preloader,
   } from 'framework7-vue';
   import api from '@/api';
 
   export default {
-    created() {
-      this.name = this.$f7route.params.name;
-      this.title = this.$f7route.query.title;
-    },
-
     components: {
       f7Page,
       f7Navbar,
@@ -54,6 +59,7 @@
       f7Icon,
       f7Chip,
       f7Block,
+      f7Preloader,
     },
 
     data() {
@@ -61,12 +67,20 @@
         listData: [],
         name: '',
         title: '',
+        isInit: false,
       };
+    },
+
+    created() {
+      this.name = this.$f7route.params.name;
+      this.title = this.$f7route.query.title;
     },
 
     methods: {
       onPageInit() {
-        this.getData();
+        this.getData().then(() => {
+          this.isInit = true;
+        });
       },
 
       getData() {

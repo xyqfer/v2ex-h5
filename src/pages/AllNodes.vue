@@ -1,7 +1,17 @@
 <template>
   <f7-page
+    class="nodes-page"
     @page:init="onPageInit">
-    <f7-navbar title="所有节点" back-link="返回"></f7-navbar>
+    <f7-navbar
+      title="所有节点"
+      back-link="返回">
+    </f7-navbar>
+
+    <f7-block
+      class="text-align-center"
+      v-if="!isInit">
+      <f7-preloader></f7-preloader>
+    </f7-block>
 
     <template v-for="item in nodesData">
       <f7-block-title class="group-title">
@@ -29,6 +39,7 @@
     f7BlockTitle,
     f7Chip,
     f7Block,
+    f7Preloader,
   } from 'framework7-vue';
   import api from '@/api';
 
@@ -41,17 +52,21 @@
       f7BlockTitle,
       f7Chip,
       f7Block,
+      f7Preloader,
     },
 
     data() {
       return {
         nodesData: [],
+        isInit: false,
       };
     },
 
     methods: {
       onPageInit() {
-        this.getData();
+        this.getData().then(() => {
+          this.isInit = true;
+        });
       },
 
       onChipClick(url, title) {
@@ -72,16 +87,6 @@
   };
 </script>
 
-<style scoped lang="scss">
-  .node-chip {
-    margin-right: 6px;
-  }
+<style lang="scss">
 
-  .group-title {
-    margin-top: 20px;
-  }
-
-  .node-container {
-    margin-bottom: 26px;
-  }
 </style>

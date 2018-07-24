@@ -18,7 +18,9 @@
       </f7-nav-right>
     </f7-navbar>
 
-    <f7-block class="text-align-center" v-if="!isInit">
+    <f7-block
+      class="text-align-center"
+      v-if="!isInit">
       <f7-preloader></f7-preloader>
     </f7-block>
 

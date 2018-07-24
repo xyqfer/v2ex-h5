@@ -3,6 +3,7 @@
     @page:init="onPageInit"
     :ptr="true"
     ref="nodesPage"
+    class="nodes-page"
     @ptr:refresh="onRefresh">
     <f7-navbar>
       <f7-nav-title>节点</f7-nav-title>
@@ -150,16 +151,20 @@
   };
 </script>
 
-<style scoped lang="scss">
-  .node-chip {
-    margin-right: 6px;
-  }
+<style lang="scss">
+  .nodes-page {
+    .page-content {
+      .node-chip {
+        margin-right: 6px;
+      }
 
-  .group-title {
-    margin-top: 20px;
-  }
+      .group-title {
+        margin-top: 20px;
+      }
 
-  .node-container {
-    margin-bottom: 26px;
+      .node-container {
+        margin-bottom: 26px;
+      }
+    }
   }
 </style>
