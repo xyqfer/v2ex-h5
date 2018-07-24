@@ -82,16 +82,42 @@
       :key="photoBrowserKey">
     </f7-photo-browser>
 
-    <f7-popover ref="popover">
+    <f7-popover
+      ref="popover">
       <f7-list>
         <f7-list-item
+          v-if="isShowChat"
           link=""
           @click="onShowChatClick"
           popover-close
           title="查看对话">
         </f7-list-item>
+        <f7-list-item
+          v-if="isShowPopup"
+          link=""
+          @click="showPopup"
+          popover-close
+          title="新页面查看">
+        </f7-list-item>
       </f7-list>
     </f7-popover>
+
+    <f7-popup
+      class="demo-popup"
+      :opened="popupOpened"
+      @popup:closed="popupOpened = false">
+      <f7-page>
+        <f7-navbar
+          title="内容">
+          <f7-nav-right>
+            <f7-link popup-close>关闭</f7-link>
+          </f7-nav-right>
+        </f7-navbar>
+        <f7-block
+          v-html="popupContent">
+        </f7-block>
+      </f7-page>
+    </f7-popup>
   </f7-page>
 </template>
 
@@ -112,6 +138,7 @@
     f7Popover,
     f7List,
     f7ListItem,
+    f7Popup,
   } from 'framework7-vue';
   import api from '@/api';
 
@@ -132,6 +159,7 @@
       f7Popover,
       f7List,
       f7ListItem,
+      f7Popup,
     },
     created() {
       let { id } = this.$f7route.params;
@@ -161,6 +189,10 @@
         showPreloader: true,
         count: '',
         author: '',
+        popupOpened: false,
+        popupContent: '',
+        isShowChat: true,
+        isShowPopup: true,
       };
     },
     methods: {
@@ -186,37 +218,57 @@
       },
 
       showPopover(index, e) {
-        let bubbleData = {...this.messagesData[index]};
-        let at = [...bubbleData.meta.at];
-        let atLength = at.length;
+        if (index !== 0) {
+          // 查看对话
+          if (this.messagesData[index].meta.at) {
+            let bubbleData = {...this.messagesData[index]};
+            let at = [...bubbleData.meta.at];
+            let atLength = at.length;
 
-        if (atLength > 0) {
-          let count = 0;
-          let fromData = [];
-          let subMessages = this.messagesData.slice(0, index);
+            if (atLength > 0) {
+              let count = 0;
+              let fromData = [];
+              let subMessages = this.messagesData.slice(0, index);
 
-          for (let i = index - 1; i >=0; i--) {
-            let item = subMessages[i];
-            let atIndex = at.indexOf(item.name);
+              for (let i = index - 1; i >=0; i--) {
+                let item = subMessages[i];
+                let atIndex = at.indexOf(item.name);
 
-            if (atIndex !== -1 && !fromData[atIndex]) {
-              fromData[atIndex] = item;
+                if (atIndex !== -1 && !fromData[atIndex]) {
+                  fromData[atIndex] = item;
 
-              if (++count >= atLength) {
-                break;
+                  if (++count >= atLength) {
+                    break;
+                  }
+                }
               }
+
+              if (count === atLength) {
+                bubbleData.type = 'sent';
+                this.dialogData = fromData.concat(bubbleData);
+                this.isShowChat = true;
+              } else {
+                this.isShowChat = false;
+              }
+            } else {
+              this.isShowChat = false;
             }
+          } else {
+            this.isShowChat = false;
           }
 
-          if (count === atLength) {
-            bubbleData.type = 'sent';
-            this.dialogData = fromData.concat(bubbleData);
+          // 新页面查看
+          this.popupContent = this.messagesData[index].text;
+          this.isShowPopup = true;
 
-            this.$nextTick(() => {
-              this.$refs.popover.open(e.target);
-            });
-          }
+          this.$nextTick(() => {
+            this.$refs.popover.open(e.target);
+          });
         }
+      },
+
+      showPopup() {
+        this.popupOpened = true;
       },
 
       onShowChatClick() {
@@ -326,9 +378,7 @@
             });
           }
         } else if (nodeName !== 'a') {
-          if (floor) {
-            this.showPopover(index, e);
-          }
+          this.showPopover(index, e);
         }
       },
 
