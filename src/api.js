@@ -10,4 +10,6 @@ export default {
   nodes: `${path}/nodes`,
   member: `${path}/member`,
   t: `${path}/t`,
+  initLogin: `${path}/login/init`,
+  login: `${path}/login`,
 };
