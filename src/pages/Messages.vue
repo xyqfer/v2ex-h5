@@ -36,7 +36,7 @@
         :last="isLastMessage(message, index)"
         :tail="isTailMessage(message, index)"
         @click:avatar="onClickMember(message.name)"
-        @click="onMessageClick(index, message.meta.floor, $event)">
+        @click:bubble="onMessageClick(index, message.meta.floor, $event)">
         <div
           slot="text"
           v-if="message.text"
