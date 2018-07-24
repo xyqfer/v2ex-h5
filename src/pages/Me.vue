@@ -40,6 +40,34 @@
       </f7-link>
     </f7-toolbar>
 
+    <f7-list
+      media-list
+      class="member-list">
+      <f7-list-item
+        link="#">
+        <img slot="media"
+             src="@/assets/img/member_0.png" />
+        <div slot="title">
+          w(ﾟДﾟ)w
+        </div>
+        <div slot="text">
+          失联人员
+        </div>
+      </f7-list-item>
+    </f7-list>
+
+    <f7-list>
+      <f7-list-item
+        link="#"
+        title="设置">
+        <div slot="media">
+          <f7-icon
+            ios="f7:settings_fill"
+            md="material:settings"></f7-icon>
+        </div>
+      </f7-list-item>
+    </f7-list>
+
   </f7-page>
 </template>
 
@@ -49,11 +77,10 @@
     f7Navbar,
     f7NavTitle,
     f7Link,
-    f7BlockTitle,
-    f7Chip,
-    f7Block,
-    f7NavRight,
     f7Toolbar,
+    f7List,
+    f7ListItem,
+    f7Icon,
   } from 'framework7-vue';
 
   export default {
@@ -62,11 +89,10 @@
       f7Navbar,
       f7NavTitle,
       f7Link,
-      f7BlockTitle,
-      f7Chip,
-      f7Block,
-      f7NavRight,
       f7Toolbar,
+      f7List,
+      f7ListItem,
+      f7Icon,
     },
 
     data() {
