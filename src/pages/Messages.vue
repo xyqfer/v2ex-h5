@@ -456,4 +456,20 @@
       }
     }
   }
+
+  .popup {
+    .embedded_image {
+      max-width: 100%;
+    }
+
+    .markdown_body {
+      img {
+        width: 100%;
+      }
+    }
+
+    iframe {
+      width: 100%;
+    }
+  }
 </style>
