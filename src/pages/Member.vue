@@ -1,7 +1,16 @@
 <template>
   <f7-page
     @page:init="onPageInit">
-    <f7-navbar title="详细资料" back-link="返回"></f7-navbar>
+    <f7-navbar
+      title="详细资料"
+      back-link="返回">
+    </f7-navbar>
+
+    <f7-block
+      class="text-align-center"
+      v-if="!isInit">
+      <f7-preloader></f7-preloader>
+    </f7-block>
 
     <f7-list media-list class="member-list" v-if="memberData.name">
       <f7-list-item>
@@ -49,6 +58,8 @@
     f7BlockTitle,
     f7List,
     f7ListItem,
+    f7Preloader,
+    f7Block,
   } from 'framework7-vue';
   import api from '@/api';
 
@@ -61,6 +72,8 @@
       f7BlockTitle,
       f7List,
       f7ListItem,
+      f7Preloader,
+      f7Block,
     },
 
     created() {
@@ -71,12 +84,15 @@
       return {
         memberData: {},
         name: '',
+        isInit: false,
       };
     },
 
     methods: {
       onPageInit() {
-        this.getData();
+        this.getData().then(() => {
+          this.isInit = true;
+        });
       },
 
       getData() {
