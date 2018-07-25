@@ -5,7 +5,6 @@ import Messages from './pages/Messages.vue';
 import Nodes from './pages/Nodes.vue';
 import Node from './pages/Go.vue';
 import Tab from './pages/Tab.vue';
-import AllNode from './pages/AllNodes.vue';
 import Member from './pages/Member.vue';
 import MemberTopic from './pages/MemberTopic.vue';
 import MemberReply from './pages/MemberReply.vue';
@@ -26,7 +25,12 @@ export default [
   },
   {
     path: '/all-nodes/',
-    component: AllNode,
+    async(routeTo, routeFrom, resolve, reject) {
+      const vueComponent = () => import('./pages/AllNodes.vue');
+      vueComponent().then((vc) => {
+        resolve({ component: vc.default })
+      });
+    },
   },
   {
     path: '/discovery/',
