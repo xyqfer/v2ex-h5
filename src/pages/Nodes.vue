@@ -103,23 +103,21 @@
       };
     },
 
-    created() {
-      this.$lf.getItem(this.lfKey)
-        .then((data) => {
-          if (data) {
-            this.nodesData = data;
-          }
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    },
-
     methods: {
       onPageInit() {
-        this.$nextTick(() => {
-          this.$f7.ptr.get(this.$refs.nodesPage.$el.querySelector('.ptr-content')).refresh();
-        });
+        this.$lf.getItem(this.lfKey)
+          .then((data) => {
+            if (data) {
+              this.nodesData = data;
+            } else {
+              this.$nextTick(() => {
+                this.$f7.ptr.get(this.$refs.nodesPage.$el.querySelector('.ptr-content')).refresh();
+              });
+            }
+          })
+          .catch((err) => {
+            console.log(err);
+          });
       },
 
       onRefresh(e, done) {
