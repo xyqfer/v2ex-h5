@@ -68,6 +68,10 @@
 
     .topic-list {
       margin: 0;
+      
+      .media-item.top {
+        background-color: #f3f2f7;
+      }
 
       .item-media {
         img {

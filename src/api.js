@@ -11,4 +11,6 @@ export default {
   member: `${path}/member`,
   t: `${path}/t`,
   search: `https://ibdkopi6vn.avosapps.us/api/v1/v2ex/search?`,
+  initLogin: `${path}/login/init`,
+  login: `${path}/login`,
 };
