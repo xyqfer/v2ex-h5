@@ -16,7 +16,8 @@
       <f7-list-item
         v-for="item in listData"
         :link="'/t/' + item.id"
-        :key="item.id">
+        :key="item.id"
+        :class="item.top ? 'top' : ''">
         <img slot="media"
              :src="item.avatar" />
         <div slot="title">
