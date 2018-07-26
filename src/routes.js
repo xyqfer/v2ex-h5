@@ -10,6 +10,7 @@ import MemberTopic from './pages/MemberTopic.vue';
 import MemberReply from './pages/MemberReply.vue';
 import ChatDetail from './pages/ChatDetail.vue';
 import Dialog from './pages/Dialog.vue';
+import Search from './pages/Search.vue';
 
 import NotFound from './pages/404.vue';
 
@@ -39,6 +40,10 @@ export default [
   {
     path: '/me/',
     component: Me,
+  },
+  {
+    path: '/search/',
+    component: Search,
   },
   {
     path: '/t/:id',

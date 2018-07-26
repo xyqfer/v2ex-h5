@@ -8,7 +8,8 @@
       <f7-nav-title>V2EX × 🌀</f7-nav-title>
       <f7-nav-right>
         <f7-link
-          icon-ios="f7:compose"
+          popover-open=".popover-menu"
+          icon-ios="f7:bars"
           icon-md="material:create">
         </f7-link>
       </f7-nav-right>
@@ -68,7 +69,9 @@
       </f7-fab-buttons>
     </f7-fab>
 
-    <f7-list media-list class="topic-list">
+    <f7-list
+      media-list
+      class="topic-list">
       <f7-list-item
         v-for="item in listData"
         :link="'/t/' + item.id"
@@ -89,6 +92,22 @@
         </span>
       </f7-list-item>
     </f7-list>
+
+    <f7-popover
+      class="popover-menu">
+      <f7-list>
+        <f7-list-item
+          link="/create/"
+          popover-close
+          title="发帖">
+        </f7-list-item>
+        <f7-list-item
+          link="/search/"
+          popover-close
+          title="搜索">
+        </f7-list-item>
+      </f7-list>
+    </f7-popover>
   </f7-page>
 </template>
 
@@ -107,6 +126,7 @@
     f7FabButtons,
     f7FabButton,
     f7Toolbar,
+    f7Popover,
   } from 'framework7-vue';
   import api from '@/api';
 
@@ -125,6 +145,7 @@
       f7FabButtons,
       f7FabButton,
       f7Toolbar,
+      f7Popover,
     },
 
     data() {

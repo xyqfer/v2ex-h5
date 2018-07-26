@@ -10,4 +10,5 @@ export default {
   nodes: `${path}/nodes`,
   member: `${path}/member`,
   t: `${path}/t`,
+  search: `https://ibdkopi6vn.avosapps.us/api/v1/v2ex/search?`,
 };
