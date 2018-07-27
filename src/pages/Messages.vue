@@ -116,6 +116,7 @@
           </f7-nav-right>
         </f7-navbar>
         <f7-block
+          class="popup-block-content"
           v-html="popupContent">
         </f7-block>
       </f7-page>
@@ -470,6 +471,10 @@
 
     iframe {
       width: 100%;
+    }
+
+    .popup-block-content {
+      word-break: break-all;
     }
   }
 </style>
