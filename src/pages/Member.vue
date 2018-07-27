@@ -14,8 +14,10 @@
 
     <f7-list media-list class="member-list" v-if="memberData.name">
       <f7-list-item>
-        <img slot="media"
-           :src="memberData.avatar" />
+        <img
+          slot="media"
+          @click="$refs.photoBrowser.open()"
+          :src="memberData.avatar" />
         <div slot="title">
           {{memberData.name}}
         </div>
@@ -46,6 +48,17 @@
       </f7-list-item>
     </f7-list>
 
+    <f7-photo-browser
+      v-if="memberData.avatar"
+      :photos="[memberData.avatar]"
+      theme="dark"
+      ref="photoBrowser"
+      type="popup"
+      back-link-text="关闭"
+      navbar-of-text="/"
+      :toolbar="false">
+    </f7-photo-browser>
+
   </f7-page>
 </template>
 
@@ -60,6 +73,7 @@
     f7ListItem,
     f7Preloader,
     f7Block,
+    f7PhotoBrowser,
   } from 'framework7-vue';
   import api from '@/api';
 
@@ -74,6 +88,7 @@
       f7ListItem,
       f7Preloader,
       f7Block,
+      f7PhotoBrowser,
     },
 
     created() {
