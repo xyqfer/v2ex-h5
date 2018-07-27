@@ -47,12 +47,16 @@
         @click="showLoginPage"
         link="#">
         <img slot="media"
+             v-if="memberData.avatar"
+             :src="memberData.avatar" />
+        <img slot="media"
+             v-else
              src="@/assets/img/member_0.png" />
         <div slot="title">
-          w(ﾟДﾟ)w
+          {{memberData.name ? memberData.name : 'w(ﾟДﾟ)w'}}
         </div>
         <div slot="text">
-          失联人员
+          {{memberData.info ? memberData.info : '失联人员'}}
         </div>
       </f7-list-item>
     </f7-list>
@@ -165,6 +169,7 @@
       return {
         initLoginData: {},
         loginScreenOpened: false,
+        memberData: {},
         username: {
           name: '',
           value: '',
@@ -177,7 +182,28 @@
           name: '',
           value: '',
         },
+        userInfoKey: 'userInfo',
       };
+    },
+
+    created() {
+      this.$lf.getItem(this.userInfoKey)
+        .then((data) => {
+          if (data && data.isLogin) {
+            this.$lf.getItem(`/member/${data.name}`)
+              .then((data) => {
+                if (data) {
+                  this.memberData = data;
+                }
+              })
+              .catch((err) => {
+                console.log(err);
+              });
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     },
 
     methods: {
@@ -220,12 +246,39 @@
           .then((result) => {
             if (result.success) {
               this.loginScreenOpened = false;
+              this.getUserData();
+            } else {
+              this.captcha.value = '';
             }
-          }).catch((err) => {
+          })
+          .catch((err) => {
           console.log(err);
         }).finally(() => {
           this.$f7.preloader.hide();
         });
+      },
+
+      getUserData() {
+        return this.$http.get(`${api.member}/${this.username.value}`)
+          .then((result) => {
+            if (result.success) {
+              this.memberData = result.data;
+              this.$lf.setItem(`/member/${this.username.value}`, result.data)
+                .catch((err) => {
+                  console.log(err);
+                });
+
+              this.$lf.setItem(this.userInfoKey, {
+                isLogin: true,
+                name: this.username.value,
+              })
+                .catch((err) => {
+                  console.log(err);
+                });
+            }
+          }).catch((err) => {
+            console.log(err);
+          });
       },
     },
   };
