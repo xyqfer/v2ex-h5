@@ -5,8 +5,18 @@
     ref="nodesPage"
     class="nodes-page"
     @ptr:refresh="onRefresh">
-    <f7-navbar>
-      <f7-nav-title>节点</f7-nav-title>
+    <f7-navbar
+      title="节点">
+      <f7-subnavbar
+        :inner="false">
+        <f7-searchbar
+          placeholder="节点"
+          disable-button-text="取消"
+          search-container=".search-list"
+          search-in=".chip-label"
+          search-item=".search-item"
+        ></f7-searchbar>
+      </f7-subnavbar>
       <f7-nav-right>
         <f7-link
           href="/all-nodes/"
@@ -52,19 +62,24 @@
       </f7-link>
     </f7-toolbar>
 
-    <template v-for="item in nodesData">
-      <f7-block-title class="group-title">
-        {{item.groupName}}
-      </f7-block-title>
-      <f7-block strong class="node-container">
-        <f7-chip
-          v-for="node in item.nodes"
-          outline
-          :text="node.name"
-          @click="onChipClick(node.url, node.name)"
-          class="node-chip"></f7-chip>
-      </f7-block>
-    </template>
+    <div class="search-list searchbar-found">
+      <div
+        class="search-item"
+        v-for="item in nodesData"
+        :key="item.groupName">
+        <f7-block-title class="group-title">
+          {{item.groupName}}
+        </f7-block-title>
+        <f7-block strong class="node-container">
+          <f7-chip
+            v-for="node in item.nodes"
+            outline
+            :text="node.name"
+            @click="onChipClick(node.url, node.name)"
+            class="node-chip"></f7-chip>
+        </f7-block>
+      </div>
+    </div>
 
   </f7-page>
 </template>
@@ -73,13 +88,14 @@
   import {
     f7Page,
     f7Navbar,
-    f7NavTitle,
     f7Link,
     f7BlockTitle,
     f7Chip,
     f7Block,
     f7NavRight,
     f7Toolbar,
+    f7Searchbar,
+    f7Subnavbar,
   } from 'framework7-vue';
   import api from '@/api';
 
@@ -87,13 +103,14 @@
     components: {
       f7Page,
       f7Navbar,
-      f7NavTitle,
       f7Link,
       f7BlockTitle,
       f7Chip,
       f7Block,
       f7NavRight,
       f7Toolbar,
+      f7Searchbar,
+      f7Subnavbar,
     },
 
     data() {
