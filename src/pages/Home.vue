@@ -10,7 +10,7 @@
         <f7-link
           popover-open=".popover-menu"
           icon-ios="f7:bars"
-          icon-md="material:create">
+          icon-md="material:menu">
         </f7-link>
       </f7-nav-right>
     </f7-navbar>

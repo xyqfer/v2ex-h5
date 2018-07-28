@@ -14,4 +14,5 @@ export default {
   initLogin: `${path}/login/init`,
   login: `${path}/login`,
   recent: `${path}/recent`,
+  checkLogin: `${path}/checkLogin`,
 };

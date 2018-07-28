@@ -19,6 +19,7 @@
     f7Statusbar,
   } from 'framework7-vue';
   import routes from './routes';
+  import api from '@/api';
 
   export default {
     components: {
@@ -30,6 +31,30 @@
 
     created() {
       this.root = process.env.VUE_APP_BASE_URL;
+
+      this.$lf.getItem(this.userInfoKey)
+        .then((data) => {
+          if (data && data.isLogin) {
+            this.$http.get(`${api.checkLogin}`)
+              .then((result) => {
+                if (result.success && !result.data.isLogin) {
+                  this.$lf.setItem(this.userInfoKey, {
+                    isLogin: false,
+                    name: null,
+                  })
+                    .catch((err) => {
+                      console.log(err);
+                    });
+                }
+              })
+              .catch((err) => {
+                console.log(err);
+              });
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     },
 
     mounted() {
@@ -60,7 +85,8 @@
     },
 
     data() {
-      let theme = 'md';
+      let storageTheme = localStorage.getItem('theme');
+      let theme = storageTheme || 'auto';
 
       return {
         f7Params: {
@@ -69,6 +95,7 @@
           id: 'm.v2ex',
         },
         root: '/',
+        userInfoKey: 'userInfo',
       };
     },
   };

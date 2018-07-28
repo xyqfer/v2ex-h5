@@ -95,15 +95,6 @@
       let name = this.$f7route.params.name;
       let lfKey = `/member/${this.name}`;
 
-      this.$lf.getItem(lfKey)
-        .then((data) => {
-          if (data) {
-            this.memberData = data;
-          }
-        })
-        .catch((err) => {
-          console.log(err);
-        });
       this.name = name;
       this.lfKey = lfKey;
     },
@@ -143,7 +134,8 @@
 </script>
 
 <style lang="scss">
-  .ios {
+  .ios,
+  .md {
     .member-list {
       .item-media {
         img {

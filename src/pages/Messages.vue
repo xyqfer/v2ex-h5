@@ -425,7 +425,7 @@
     .view {
       .messages-page {
         background: initial;
-        background-image: url(~@/assets/img/background_1.png);
+        background-image: url(~@/assets/img/background_1.jpg);
         background-repeat: no-repeat;
         background-size: cover;
         background-position: center;
@@ -459,7 +459,9 @@
         }
       }
     }
+  }
 
+  .ios {
     .theme-dark {
       .view {
         .messages-page {
@@ -467,6 +469,22 @@
             .message-received {
               .message-bubble {
                 background-color: #333;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .md {
+    .theme-dark {
+      .view {
+        .messages-page {
+          .messages-content {
+            .message-received {
+              .message-bubble {
+                background-color: #fff;
               }
             }
           }
