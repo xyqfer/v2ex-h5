@@ -63,7 +63,7 @@
 
     <f7-list>
       <f7-list-item
-        link="#"
+        link="/setting/"
         title="设置">
         <div slot="media">
           <f7-icon

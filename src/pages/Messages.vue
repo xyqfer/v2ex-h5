@@ -456,6 +456,20 @@
         }
       }
     }
+
+    .theme-dark {
+      .view {
+        .messages-page {
+          .messages-content {
+            .message-received {
+              .message-bubble {
+                background-color: #333;
+              }
+            }
+          }
+        }
+      }
+    }
   }
 
   .popup {

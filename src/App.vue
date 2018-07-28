@@ -31,8 +31,37 @@
     created() {
       this.root = process.env.VUE_APP_BASE_URL;
     },
+
+    mounted() {
+      this.$lf.getItem('layout')
+        .then((layout) => {
+          if (layout) {
+            this.$f7.root.removeClass('theme-dark theme-light').addClass(`theme-${layout}`);
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+
+      this.$lf.getItem('color')
+        .then((color) => {
+          console.log(color);
+          if (color) {
+            const currentColorClass = this.$f7.root[0].className.match(/color-theme-([a-z]*)/);
+
+            if (currentColorClass) {
+              this.$f7.root.removeClass(currentColorClass[0]);
+            }
+            this.$f7.root.addClass(`color-theme-${color}`);
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    },
+
     data() {
-      let theme = 'auto';
+      let theme = 'ios';
 
       return {
         f7Params: {
@@ -99,6 +128,14 @@
 
       .chip-container {
         height: 20px;
+      }
+    }
+
+    .theme-dark {
+      .topic-list {
+        .media-item.top {
+          background-color: #333;
+        }
       }
     }
   }

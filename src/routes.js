@@ -11,6 +11,8 @@ import MemberReply from './pages/MemberReply.vue';
 import ChatDetail from './pages/ChatDetail.vue';
 import Dialog from './pages/Dialog.vue';
 import Search from './pages/Search.vue';
+import Setting from './pages/Setting.vue';
+import Color from './pages/Color.vue';
 
 import NotFound from './pages/404.vue';
 
@@ -44,6 +46,14 @@ export default [
   {
     path: '/search/',
     component: Search,
+  },
+  {
+    path: '/setting/',
+    component: Setting,
+  },
+  {
+    path: '/color/',
+    component: Color,
   },
   {
     path: '/t/:id',
