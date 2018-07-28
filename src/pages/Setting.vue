@@ -29,9 +29,14 @@
         name="theme">
       </f7-list-item>
     </f7-list>
-    <f7-block-footer class="text-align-right">
-      需要 <a href="javascript:location.reload(true);" class="external">刷新页面</a>
-    </f7-block-footer>
+
+    <f7-list inset>
+      <f7-list-button
+        title="退出登录"
+        color="red"
+        @click="onLogoutClick">
+      </f7-list-button>
+    </f7-list>
 
   </f7-page>
 </template>
@@ -48,8 +53,9 @@
     f7Preloader,
     f7List,
     f7ListItem,
-    f7BlockFooter,
+    f7ListButton,
   } from 'framework7-vue';
+  import api from '@/api';
 
   export default {
     components: {
@@ -63,7 +69,7 @@
       f7Preloader,
       f7List,
       f7ListItem,
-      f7BlockFooter,
+      f7ListButton,
     },
 
     created() {
@@ -88,12 +94,40 @@
           title: 'Material Design',
           value: 'md',
         }],
+        userInfoKey: 'userInfo',
       };
     },
 
     methods: {
       onRadioChange(e) {
         localStorage.setItem(this.lsKey, e.target.value);
+        location.reload(true);
+      },
+
+      onLogoutClick() {
+        this.$f7.preloader.show();
+        this.$http.post({
+          url: api.logout
+        })
+          .then(() => {
+            this.$lf.setItem(this.userInfoKey, {
+              isLogin: false,
+            })
+              .then(() => {
+                this.$f7router.back('/me/', {
+                  ignoreCache: true,
+                });
+              })
+              .catch((err) => {
+                console.log(err);
+              });
+          })
+          .catch((err) => {
+            console.log(err);
+          })
+          .finally(() => {
+            this.$f7.preloader.hide();
+          });
       },
     }
   };

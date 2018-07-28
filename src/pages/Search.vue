@@ -136,6 +136,21 @@
           margin-top: 0;
           bottom: 0;
           padding-bottom: 10px;
+          overflow: initial;
+          white-space: initial;
+          text-align: left;
+        }
+      }
+    }
+  }
+
+  .md {
+    .search-card-container {
+      .card-header {
+        min-height: initial;
+
+        a.link {
+          padding-top: 10px;
         }
       }
     }

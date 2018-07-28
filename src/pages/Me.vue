@@ -44,7 +44,7 @@
       media-list
       class="member-list">
       <f7-list-item
-        @click="showLoginPage"
+        @click="onUserClick"
         link="#">
         <img slot="media"
              v-if="memberData.avatar"
@@ -207,6 +207,16 @@
     },
 
     methods: {
+      onUserClick() {
+        let name = this.memberData.name;
+
+        if (name) {
+          this.$f7router.navigate(`/member/${name}`);
+        } else {
+          this.showLoginPage();
+        }
+      },
+
       showLoginPage() {
         this.$f7.preloader.show();
         this.$http.get(`${api.initLogin}`)
@@ -231,7 +241,7 @@
       login() {
         this.$f7.preloader.show();
         this.$http.post({
-          url: `${api.login}`,
+          url: api.login,
           data: {
             once: this.initLoginData.once,
             cookie: this.initLoginData.cookie,
