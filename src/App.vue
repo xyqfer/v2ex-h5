@@ -60,7 +60,7 @@
     },
 
     data() {
-      let theme = 'ios';
+      let theme = 'md';
 
       return {
         f7Params: {
