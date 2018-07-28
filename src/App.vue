@@ -45,7 +45,6 @@
 
       this.$lf.getItem('color')
         .then((color) => {
-          console.log(color);
           if (color) {
             const currentColorClass = this.$f7.root[0].className.match(/color-theme-([a-z]*)/);
 

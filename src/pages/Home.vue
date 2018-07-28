@@ -102,6 +102,11 @@
           popover-close
           title="搜索">
         </f7-list-item>
+        <f7-list-item
+          link="/recent/"
+          popover-close
+          title="最近主题">
+        </f7-list-item>
       </f7-list>
     </f7-popover>
   </f7-page>

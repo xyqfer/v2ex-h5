@@ -13,6 +13,7 @@ import Dialog from './pages/Dialog.vue';
 import Search from './pages/Search.vue';
 import Setting from './pages/Setting.vue';
 import Color from './pages/Color.vue';
+import Recent from './pages/Recent.vue';
 
 import NotFound from './pages/404.vue';
 
@@ -54,6 +55,10 @@ export default [
   {
     path: '/color/',
     component: Color,
+  },
+  {
+    path: '/recent/',
+    component: Recent,
   },
   {
     path: '/t/:id',
