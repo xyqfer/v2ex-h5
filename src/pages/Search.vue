@@ -11,7 +11,7 @@
         :inner="false">
         <f7-searchbar
           :custom-search="true"
-          placeholder="节点、帖子"
+          placeholder="主题、帖子"
           disable-button-text="取消"
           @keyup.enter.native="search"
         ></f7-searchbar>
