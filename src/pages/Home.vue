@@ -98,11 +98,6 @@
       class="popover-menu">
       <f7-list>
         <f7-list-item
-          link="/create/"
-          popover-close
-          title="发帖">
-        </f7-list-item>
-        <f7-list-item
           link="/search/"
           popover-close
           title="搜索">
