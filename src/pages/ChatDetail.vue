@@ -1,8 +1,12 @@
 <template>
-  <f7-page>
-    <f7-navbar title="聊天信息" back-link="返回"></f7-navbar>
+  <f7-page
+    class="chat-detail-page">
+    <f7-navbar
+      title="聊天信息"
+      back-link="返回">
+    </f7-navbar>
 
-    <f7-list v-if="chatInfo.node.url">
+    <f7-list v-if="chatInfo">
       <f7-list-item
         :link="`${chatInfo.node.url}?title=${chatInfo.node.name}`"
         title="所在节点"
@@ -17,6 +21,25 @@
       </f7-list-item>
     </f7-list>
 
+    <template
+      v-if="chatInfo && chatInfo.tag.length > 0">
+      <f7-block-title
+        class="group-title">
+        标签
+      </f7-block-title>
+      <f7-block
+        strong
+        class="node-container">
+        <f7-chip
+          v-for="node in chatInfo.tag"
+          outline
+          :text="node.name"
+          @click="onChipClick(node.url, node.name)"
+          class="node-chip">
+        </f7-chip>
+      </f7-block>
+    </template>
+
   </f7-page>
 </template>
 
@@ -28,6 +51,9 @@
     f7Link,
     f7List,
     f7ListItem,
+    f7BlockTitle,
+    f7Chip,
+    f7Block,
   } from 'framework7-vue';
 
   export default {
@@ -38,6 +64,9 @@
       f7Link,
       f7List,
       f7ListItem,
+      f7BlockTitle,
+      f7Chip,
+      f7Block,
     },
 
     created() {
@@ -46,7 +75,7 @@
 
       this.$lf.getItem(`/t/${id}/topic`)
         .then((data) => {
-          this.chatInfo.node = data.node;
+          this.chatInfo = data;
         })
         .catch((err) => {
           console.log(err);
@@ -56,13 +85,32 @@
     data() {
       return {
         id: 0,
-        chatInfo: {
-          node: {},
-        },
+        chatInfo: null,
       };
     },
+
+    methods: {
+      onChipClick(url, title) {
+        this.$f7router.navigate(`${url}/?title=${title}`);
+      },
+    }
   };
 </script>
 
 <style lang="scss">
+  .chat-detail-page {
+    .page-content {
+      .node-chip {
+        margin-right: 6px;
+      }
+
+      .group-title {
+        margin-top: 20px;
+      }
+
+      .node-container {
+        margin-bottom: 26px;
+      }
+    }
+  }
 </style>

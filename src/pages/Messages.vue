@@ -24,7 +24,10 @@
       <f7-preloader></f7-preloader>
     </f7-block>
 
-    <f7-messages ref="messages" :scroll-messages="false" class="v2ex-message-list">
+    <f7-messages
+      ref="messages"
+      :scroll-messages="false"
+      class="v2ex-message-list">
       <f7-message
         v-for="(message, index) in messagesData"
         :key="index"
