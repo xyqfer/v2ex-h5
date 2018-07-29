@@ -45,7 +45,7 @@
         :title="item.name"
         :key="item.value"
         @change="onHostChange"
-        name="theme">
+        name="host">
       </f7-list-item>
     </f7-list>
 
