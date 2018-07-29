@@ -1,6 +1,5 @@
-const path = `${process.env.VUE_APP_HOST}/api/v1/v2ex`;
-
-export default {
+const path = `##host##/api/v1/v2ex`;
+const api = {
   path,
   hot: `${path}/hot`,
   tab: `${path}/tab`,
@@ -18,3 +17,5 @@ export default {
   checkLogin: `${path}/checkLogin`,
   tag: `${path}/tag`,
 };
+
+export default api;

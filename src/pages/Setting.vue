@@ -30,7 +30,21 @@
         :value="item.value"
         :title="item.title"
         :key="item.value"
-        @change="onRadioChange"
+        @change="onThemeChange"
+        name="theme">
+      </f7-list-item>
+    </f7-list>
+
+    <f7-block-title>接口域名</f7-block-title>
+    <f7-list>
+      <f7-list-item
+        v-for="item in hostObj"
+        radio
+        :checked="item.value === host"
+        :value="item.value"
+        :title="item.name"
+        :key="item.value"
+        @change="onHostChange"
         name="theme">
       </f7-list-item>
     </f7-list>
@@ -61,6 +75,7 @@
     f7ListButton,
   } from 'framework7-vue';
   import api from '@/api';
+  import hostObj from '@/host';
 
   export default {
     components: {
@@ -78,17 +93,27 @@
     },
 
     created() {
-      let storageTheme = localStorage.getItem(this.lsKey);
+      let storageTheme = localStorage.getItem(this.themeKey);
 
       if (storageTheme) {
         this.theme = storageTheme;
       }
+
+      let storageHost = localStorage.getItem(this.hostKey);
+
+      if (storageHost) {
+        this.host = storageHost;
+      }
+
+      this.hostObj = {...hostObj};
     },
 
     data() {
       return {
-        lsKey: 'theme',
+        themeKey: 'theme',
+        hostKey: 'host',
         theme: 'auto',
+        host: 'auto',
         themeList: [{
           title: 'Auto',
           value: 'auto',
@@ -99,14 +124,19 @@
           title: 'Material Design',
           value: 'md',
         }],
+        hostObj: {},
         userInfoKey: 'userInfo',
       };
     },
 
     methods: {
-      onRadioChange(e) {
-        localStorage.setItem(this.lsKey, e.target.value);
+      onThemeChange(e) {
+        localStorage.setItem(this.themeKey, e.target.value);
         location.reload(true);
+      },
+
+      onHostChange(e) {
+        localStorage.setItem(this.hostKey, e.target.value);
       },
 
       onLogoutClick() {
@@ -137,6 +167,9 @@
 
       clearStorage() {
         this.$lf.clear()
+          .then(() => {
+            localStorage.clear();
+          })
           .catch((err) => {
             console.log(err);
           });

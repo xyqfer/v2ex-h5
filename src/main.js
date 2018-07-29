@@ -22,6 +22,14 @@ Vue.prototype.$http = {
       };
     }
 
+    let storageHost = localStorage.getItem('host');
+    if (storageHost === 'auto') {
+      storageHost = location.origin;
+    }
+
+    let host = storageHost || location.origin;
+    config.url = config.url.replace(/^##host##/, host);
+
     return new Promise((resolve, reject) => {
       Framework7.request(Object.assign({}, {
         method: 'GET',
@@ -39,6 +47,14 @@ Vue.prototype.$http = {
   },
 
   post(config = {}) {
+    let storageHost = localStorage.getItem('host');
+    if (storageHost === 'auto') {
+      storageHost = location.origin;
+    }
+
+    let host = storageHost || location.origin;
+    config.url = config.url.replace(/^##host##/, host);
+
     return new Promise((resolve, reject) => {
       Framework7.request(Object.assign({}, {
         method: 'POST',
