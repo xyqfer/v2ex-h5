@@ -1,5 +1,6 @@
 <template>
   <f7-page
+    :hide-navbar-on-scroll="hideNavbar"
     :ptr="true"
     @page:init="onPageInit"
     @ptr:refresh="onRefresh"
@@ -161,6 +162,7 @@
           creative: '创意',
           tech: '技术',
         },
+        hideNavbar: false,
       };
     },
 
@@ -174,6 +176,10 @@
         .catch((err) => {
           console.log(err);
         });
+
+      if (this.$f7.theme === 'md') {
+        this.hideNavbar = true;
+      }
     },
 
     methods: {

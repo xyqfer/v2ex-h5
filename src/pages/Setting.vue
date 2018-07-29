@@ -94,13 +94,11 @@
 
     created() {
       let storageTheme = localStorage.getItem(this.themeKey);
-
       if (storageTheme) {
         this.theme = storageTheme;
       }
 
       let storageHost = localStorage.getItem(this.hostKey);
-
       if (storageHost) {
         this.host = storageHost;
       }
