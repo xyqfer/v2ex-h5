@@ -16,4 +16,5 @@ export default {
   logout: `${path}/logout`,
   recent: `${path}/recent`,
   checkLogin: `${path}/checkLogin`,
+  tag: `${path}/tag`,
 };

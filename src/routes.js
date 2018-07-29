@@ -14,6 +14,7 @@ import Search from './pages/Search.vue';
 import Setting from './pages/Setting.vue';
 import Color from './pages/Color.vue';
 import Recent from './pages/Recent.vue';
+import Tag from './pages/Tag.vue';
 
 import NotFound from './pages/404.vue';
 
@@ -79,6 +80,10 @@ export default [
   {
     path: '/tab/:name',
     component: Tab,
+  },
+  {
+    path: '/tag/:name',
+    component: Tag,
   },
   {
     path: '/member/:name',

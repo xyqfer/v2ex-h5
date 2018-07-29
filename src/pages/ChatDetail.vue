@@ -91,7 +91,7 @@
 
     methods: {
       onChipClick(url, title) {
-        this.$f7router.navigate(`${url}/?title=${title}`);
+        this.$f7router.navigate(`${url}?title=${title}`);
       },
     }
   };
