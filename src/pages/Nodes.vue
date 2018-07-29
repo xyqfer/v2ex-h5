@@ -1,5 +1,6 @@
 <template>
   <f7-page
+    :hide-navbar-on-scroll="hideBar"
     @page:init="onPageInit"
     :ptr="true"
     ref="nodesPage"
@@ -96,10 +97,17 @@
       f7Toolbar,
     },
 
+    created() {
+      if (this.$f7.theme === 'md') {
+        this.hideBar = true;
+      }
+    },
+
     data() {
       return {
         nodesData: [],
         lfKey: 'nodesData',
+        hideBar: false,
       };
     },
 

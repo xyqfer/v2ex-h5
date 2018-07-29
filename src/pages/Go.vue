@@ -49,7 +49,7 @@
           :link="false"
           title="页码">
           <f7-input
-            type="tel"
+            type="number"
             @keyup.enter.native="jumpPage"
             :placeholder="'1~' + total"
             clear-button>
