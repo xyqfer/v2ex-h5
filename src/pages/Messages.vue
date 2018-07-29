@@ -98,6 +98,13 @@
           title="查看对话">
         </f7-list-item>
         <f7-list-item
+          v-if="isShowReply"
+          link=""
+          @click="onShowReplyClick"
+          popover-close
+          title="回复ta的">
+        </f7-list-item>
+        <f7-list-item
           v-if="isShowPopup"
           link=""
           @click="showPopup"
@@ -199,6 +206,7 @@
         popupContent: '',
         isShowChat: true,
         isShowPopup: true,
+        isShowReply: false,
       };
     },
     methods: {
@@ -266,6 +274,9 @@
           // 新页面查看
           this.popupContent = this.messagesData[index].text;
           this.isShowPopup = true;
+
+          // 回复ta的
+
 
           this.$nextTick(() => {
             this.$refs.popover.open(e.target);
@@ -390,6 +401,10 @@
 
       onClickMember(name) {
         this.$f7router.navigate(`/member/${name}/`);
+      },
+
+      onShowReplyClick() {
+
       },
 
       isFirstMessage(message, index) {
