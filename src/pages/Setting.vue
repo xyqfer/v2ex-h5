@@ -14,6 +14,11 @@
         link="/color/"
         title="颜色">
       </f7-list-item>
+      <f7-list-item
+        link="#"
+        @click="clearStorage"
+        title="清除缓存">
+      </f7-list-item>
     </f7-list>
 
     <f7-block-title>主题</f7-block-title>
@@ -127,6 +132,13 @@
           })
           .finally(() => {
             this.$f7.preloader.hide();
+          });
+      },
+
+      clearStorage() {
+        this.$lf.clear()
+          .catch((err) => {
+            console.log(err);
           });
       },
     }
