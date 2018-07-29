@@ -8,6 +8,13 @@
       back-link="返回"
       :title="title"
       :subtitle="topicCount">
+      <f7-nav-right>
+        <f7-link
+          popover-open=".node-menu"
+          icon-ios="f7:bars"
+          icon-md="material:menu">
+        </f7-link>
+      </f7-nav-right>
     </f7-navbar>
 
     <f7-list
@@ -33,6 +40,23 @@
         </span>
       </f7-list-item>
     </f7-list>
+
+    <f7-popover
+      ref="nodeMenu"
+      class="node-menu">
+      <f7-list>
+        <f7-list-item
+          :link="false"
+          title="页码">
+          <f7-input
+            type="tel"
+            @keyup.enter.native="jumpPage"
+            :placeholder="'1~' + total"
+            clear-button>
+          </f7-input>
+        </f7-list-item>
+      </f7-list>
+    </f7-popover>
   </f7-page>
 </template>
 
@@ -46,6 +70,9 @@
     f7Icon,
     f7Chip,
     f7Block,
+    f7NavRight,
+    f7Popover,
+    f7Input,
   } from 'framework7-vue';
   import api from '@/api';
 
@@ -69,6 +96,9 @@
       f7Icon,
       f7Chip,
       f7Block,
+      f7NavRight,
+      f7Popover,
+      f7Input,
     },
 
     data() {
@@ -96,6 +126,15 @@
         this.getData().then(() => {
           this.showPreloader = this.allowInfinite = !(this.p > this.total);
         });
+      },
+
+      jumpPage(e) {
+        let page = +e.target.value;
+
+        this.$refs.nodeMenu.f7Popover.close();
+        this.p = page;
+        this.listData = [];
+        this.getData();
       },
 
       getData() {

@@ -52,18 +52,6 @@
       </f7-list-item>
     </f7-list>
 
-    <f7-list>
-      <f7-list-item
-        link="#"
-        title="小工具">
-        <div slot="media">
-          <f7-icon
-            ios="f7:stopwatch_fill"
-            md="material:build"></f7-icon>
-        </div>
-      </f7-list-item>
-    </f7-list>
-
   </f7-page>
 </template>
 
