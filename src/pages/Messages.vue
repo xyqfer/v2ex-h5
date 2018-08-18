@@ -57,17 +57,14 @@
           </template>
         </div>
         <div slot="text-footer">
-          <template v-if="message.meta.time">
-            {{message.meta.time}}
+          <template v-if="message.meta.createTime">
+            {{message.meta.createTime}}
           </template>
           <template v-if="message.meta.status">
             {{message.meta.status}}
           </template>
-          <template v-if="message.meta.addition">
-            {{message.meta.addition.time}}
-          </template>
           <template v-if="message.meta.thank">
-            •&nbsp;{{message.meta.thank}}
+            {{message.meta.thank}}
           </template>
           <template v-if="message.meta.click">
             •&nbsp;{{message.meta.click}}
@@ -316,7 +313,7 @@
                   text: topicData.title,
                   avatar: topicData.avatar,
                   meta: {
-                    time: topicData.time,
+                    createTime: topicData.createTime,
                     click: topicData.click,
                   }
                 });
@@ -342,7 +339,6 @@
                       avatar: topicData.avatar,
                       meta: {
                         addition: {
-                          time: item.time,
                           title: item.title,
                         }
                       }
@@ -361,7 +357,6 @@
                   avatar: item.avatar,
                   meta: {
                     floor: item.floor,
-                    time: item.time,
                     thank: item.thank,
                     at: item.at,
                   }
