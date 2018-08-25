@@ -64,6 +64,7 @@
       <f7-fab-buttons position="top">
         <f7-fab-button
           v-for="(value, key) in tabConfig"
+          :key="key"
           @click="onFabClick(key)">
           {{value}}
         </f7-fab-button>
