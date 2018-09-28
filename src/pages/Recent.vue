@@ -10,7 +10,7 @@
       :subtitle="topicCount">
       <f7-nav-right>
         <f7-link
-          popover-open=".node-menu"
+          popover-open=".recent-menu"
           icon-ios="f7:bars"
           icon-md="material:menu">
         </f7-link>
@@ -44,17 +44,16 @@
 
     <f7-popover
       ref="nodeMenu"
-      class="node-menu">
+      class="recent-menu">
       <f7-list>
         <f7-list-item
           :link="false"
-          title="页码">
-          <f7-input
-            type="number"
-            @keyup.enter.native="jumpPage"
-            :placeholder="'1~' + total"
-            clear-button>
-          </f7-input>
+          title="乱序模式"
+        >
+          <f7-toggle 
+            color="blue"
+            @toggle:change="onToggleChange"
+          ></f7-toggle>
         </f7-list-item>
       </f7-list>
     </f7-popover>
@@ -73,7 +72,7 @@
     f7Block,
     f7NavRight,
     f7Popover,
-    f7Input,
+    f7Toggle,
   } from 'framework7-vue';
   import api from '@/api';
 
@@ -89,7 +88,7 @@
       f7Block,
       f7NavRight,
       f7Popover,
-      f7Input,
+      f7Toggle,
     },
 
     data() {
@@ -100,6 +99,7 @@
         topicCount: '',
         allowInfinite: true,
         showPreloader: true,
+        isRandom: false,
       };
     },
 
@@ -117,13 +117,21 @@
         });
       },
 
-      jumpPage(e) {
-        let page = +e.target.value;
-
-        this.$refs.nodeMenu.f7Popover.close();
-        this.p = page;
+      onToggleChange(isRandom) {
+        this.isRandom = isRandom;
         this.listData = [];
-        this.getData();
+        this.p = isRandom ? this.getRandomPage() : 1;
+        
+        if (!this.allowInfinite) return;
+
+        this.allowInfinite = false;
+        this.getData().then(() => {
+          this.allowInfinite = true;
+        });
+      },
+
+      getRandomPage() {
+        return Math.floor(1 + Math.random() * this.total);
       },
 
       getData() {
@@ -136,7 +144,7 @@
               }
 
               this.listData = this.listData.concat(result.data.list);
-              this.p = this.p + 1;
+              this.p = this.isRandom ? this.getRandomPage() : this.p + 1;
               this.total = result.data.total;
               this.topicCount = `${result.data.count} 主题`;
             }
