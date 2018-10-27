@@ -6,7 +6,7 @@
     :infinite="true"
     class="messages-page">
     <f7-navbar
-      title="群聊"
+      :title="title"
       back-link="返回"
       :subtitle="count">
       <f7-nav-right>
@@ -43,7 +43,7 @@
         <div
           slot="text"
           v-if="message.text"
-          v-html="message.text">
+          v-html="(message.quoteHtml || '') + message.text">
         </div>
         <div slot="text-header">
           <template v-if="message.meta.floor">
@@ -204,6 +204,7 @@
         isShowChat: true,
         isShowPopup: true,
         isShowReply: false,
+        title: '群聊',
       };
     },
     methods: {
@@ -299,6 +300,7 @@
               let topicData = result.data.topic;
 
               this.count = topicData.count;
+              this.title = topicData.title;
               this.$lf.setItem(this.lfKey, topicData)
                 .catch((err) => {
                   console.log(err);
@@ -349,11 +351,37 @@
                 this.node = topicData.node;
               }
 
-              result.data.reply.forEach((item) => {
+              const tmp = this.messagesData.concat(result.data.reply).map((item) => {
+                if (!item.name) {
+                  item.name = item.author;
+                  item.text = item.content;
+                }
+                return item;
+              });
+              result.data.reply.forEach((item, index) => {
+                let quoteHtml = '';
+
+                if (item.at && item.at.length > 0) {
+                  const at = item.at;
+                  const atLength = at.length;
+
+                  for (let i = 0; i < atLength; i++) {
+                    const name = at[i];
+
+                    for (let j = 0; j < tmp.length; j++) {
+                      if (tmp[j].name === name) {
+                        quoteHtml += `<div class="quote-html">${tmp[j].text}</div>`;
+                        break;
+                      }
+                    }
+                  }
+                }
+
                 messagesData.push({
                   name: item.author,
                   type: 'received',
                   text: item.content,
+                  quoteHtml,
                   avatar: item.avatar,
                   meta: {
                     floor: item.floor,
@@ -521,5 +549,13 @@
     .popup-block-content {
       word-break: break-all;
     }
+  }
+
+  .quote-html {
+    font-size: 14px;
+    border-left: 2px solid #2196f3;
+    padding-left: 6px;
+    margin-bottom: 5px;
+    margin-top: 2px;
   }
 </style>
